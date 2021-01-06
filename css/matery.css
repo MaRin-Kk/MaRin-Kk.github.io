@@ -731,7 +731,8 @@ header .go-back i {
 
 .index-card .card .card-content {
     padding: 20px 40px;
-    background-color: #c9d8cd;
+  background: linear-gradient(to bottom, #232526, #414345);
+  color: rgb(255, 255, 255);
 }
 
 @media only screen and (min-width: 1418px) {
