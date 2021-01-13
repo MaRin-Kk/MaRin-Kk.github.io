@@ -572,6 +572,7 @@ header .go-back i {
     position: relative;
     color: #fff;
     z-index: 2;
+    /* margin-top: -100px; */
 }
 
 .bg-cover .title {
