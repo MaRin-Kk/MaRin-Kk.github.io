@@ -433,12 +433,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/mysql/">
-                                <span class="chip bg-color">mysql</span>
-                            </a>
-                        
                             <a href="/tags/node-js/">
                                 <span class="chip bg-color">node.js</span>
+                            </a>
+                        
+                            <a href="/tags/mysql/">
+                                <span class="chip bg-color">mysql</span>
                             </a>
                         
                     </div>
@@ -513,22 +513,22 @@
 <p>3.安装express 第三方模块：<code>npm i express</code></p>
 <p>4.安装mysql第三方模块：<code>npm i mysql</code></p>
 <p>安装完毕如下图显示：</p>
-<p><img src="imgs/%E4%BD%BF%E7%94%A8node-js%E8%BF%9E%E6%8E%A5mysql/image-20210118183338864.png" alt="image-20210118183338864"></p>
+<p><img src="/%E4%BD%BF%E7%94%A8node-js%E8%BF%9E%E6%8E%A5mysql.assets/image-20210118183151508.png"></p>
 <h3 id="三、开始写代码"><a href="#三、开始写代码" class="headerlink" title="三、开始写代码"></a>三、开始写代码</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>) <span class="comment">//引入express 模块</span></span><br><span class="line"><span class="keyword">const</span> app = express()       <span class="comment">//创建实例</span></span><br><span class="line"><span class="keyword">const</span> mysql = <span class="built_in">require</span>(<span class="string">&#x27;mysql&#x27;</span>)   <span class="comment">//引入mysql 模块</span></span><br><span class="line"><span class="comment">// 创建数据库连接 填入数据库信息 </span></span><br><span class="line"><span class="keyword">const</span> conn = mysql.createConnection(&#123;</span><br><span class="line">  user:<span class="string">&#x27;root&#x27;</span>,</span><br><span class="line">  password:<span class="string">&#x27;123456&#x27;</span>,</span><br><span class="line">  host:<span class="string">&#x27;localhost&#x27;</span>,</span><br><span class="line">  database:<span class="string">&#x27;node&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 测试连接</span></span><br><span class="line">conn.connect(<span class="function"><span class="params">err</span>=&gt;</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(err,<span class="string">&#x27;如果为null 就是连接成功&#x27;</span>);</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 开启服务器</span></span><br><span class="line">app.listen(<span class="number">3000</span>,<span class="function">()=&gt;</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">&#x27;服务器在3000端口开启。。。。。&#x27;</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 <p>​     进入文件夹运行   node .\app.js</p>
 <p>出现下图说明连接成功</p>
-<p><img src="imgs/%E4%BD%BF%E7%94%A8node-js%E8%BF%9E%E6%8E%A5mysql/image-20210118183502065.png" alt="image-20210118183502065"></p>
+<p><img src="/%E4%BD%BF%E7%94%A8node-js%E8%BF%9E%E6%8E%A5mysql.assets/Q7EQ%7BIVZ%60CAQ%5BYG%250T%5B%25K1Y.png"></p>
 <p>下面是增删改查的操作，以插入和查询为例</p>
 <h4 id="1-插入功能"><a href="#1-插入功能" class="headerlink" title="1.插入功能"></a>1.插入功能</h4><p>在开启服务器代码上方增加如下代码：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义路由(说白了就是网址)     </span></span><br><span class="line">app.get(<span class="string">&#x27;/a&#x27;</span>,<span class="function">(<span class="params">req,res</span>)=&gt;</span>&#123;</span><br><span class="line"> <span class="keyword">let</span> sqlStr =  <span class="string">&quot;INSERT INTO student ( s_no, s_name )VALUES(20150015,&#x27;大帅比&#x27;)&quot;</span></span><br><span class="line">    <span class="comment">//执行mysql 语句</span></span><br><span class="line">    conn.query(sqlStr,<span class="function">(<span class="params">err</span>)=&gt;</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(err,<span class="string">&#x27;如果为null，sql语句执行成功&#x27;</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="comment">//成功后的页面显示</span></span><br><span class="line">    res.send(<span class="string">&#x27;插入成功&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 <p>插入前</p>
-<p><img src="imgs/%E4%BD%BF%E7%94%A8node-js%E8%BF%9E%E6%8E%A5mysql/image-20210118160109633.png" alt="image-20210118160109633"></p>
+<p><img src="/%E4%BD%BF%E7%94%A8node-js%E8%BF%9E%E6%8E%A5mysql.assets/image-20210118160109633.png"></p>
 <p>插入后</p>
-<p><img src="imgs/%E4%BD%BF%E7%94%A8node-js%E8%BF%9E%E6%8E%A5mysql/image-20210118160153000.png" alt="image-20210118160153000"></p>
+<p><img src="/%E4%BD%BF%E7%94%A8node-js%E8%BF%9E%E6%8E%A5mysql.assets/image-20210118160153000.png"></p>
 <h4 id="2-查询功能"><a href="#2-查询功能" class="headerlink" title="2.查询功能"></a>2.查询功能</h4><p>在插入代码后添加：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 查询信息</span></span><br><span class="line">app.get(<span class="string">&#x27;/find&#x27;</span>,<span class="function">(<span class="params">req,res</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> sql = <span class="string">`SELECT * FROM student `</span></span><br><span class="line">    conn.query(sql,<span class="function">(<span class="params">err,results</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="comment">//返回的查询信息为result 然后将其显示在页面上</span></span><br><span class="line">        res.send(results)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 <p>查询结果如图(没有排序比较乱):</p>
-<p><img src="imgs/%E4%BD%BF%E7%94%A8node-js%E8%BF%9E%E6%8E%A5mysql/image-20210118160511852.png" alt="image-20210118160511852"></p>
+<p><img src="/%E4%BD%BF%E7%94%A8node-js%E8%BF%9E%E6%8E%A5mysql.assets/image-20210118160511852.png"></p>
 <h2 id="结语-：至此node连接数据库以及部分功能展示完毕-本文为作者第一篇文章，写的不好的地方见谅"><a href="#结语-：至此node连接数据库以及部分功能展示完毕-本文为作者第一篇文章，写的不好的地方见谅" class="headerlink" title="结语 ：至此node连接数据库以及部分功能展示完毕(本文为作者第一篇文章，写的不好的地方见谅)"></a>结语 ：至此node连接数据库以及部分功能展示完毕(本文为作者第一篇文章，写的不好的地方见谅)</h2>
                 
             </div>
@@ -593,12 +593,12 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/mysql/">
-                                    <span class="chip bg-color">mysql</span>
-                                </a>
-                            
                                 <a href="/tags/node-js/">
                                     <span class="chip bg-color">node.js</span>
+                                </a>
+                            
+                                <a href="/tags/mysql/">
+                                    <span class="chip bg-color">mysql</span>
                                 </a>
                             
                         </div>
@@ -854,12 +854,12 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/mysql/">
-                        <span class="chip bg-color">mysql</span>
-                    </a>
-                    
                     <a href="/tags/node-js/">
                         <span class="chip bg-color">node.js</span>
+                    </a>
+                    
+                    <a href="/tags/mysql/">
+                        <span class="chip bg-color">mysql</span>
                     </a>
                     
                 </div>
